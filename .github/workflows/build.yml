@@ -10,10 +10,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unzip project
         run: unzip -q mahesh_jarvis.zip
-      - name: Use keyless voice pipeline
-        run: |
-          cp voice_pipeline.dart mahesh_jarvis/source/lib/services/voice_pipeline.dart
-          sed -i 's/Picovoice AccessKey (required)/Not needed - leave empty/' mahesh_jarvis/source/lib/screens/setup_screen.dart
+      - name: Patch app
+        run: bash patch.sh
       - name: Pin plugin versions
         run: |
           sed -i -E \
