@@ -8,6 +8,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Unzip project
+        run: unzip -q mahesh_jarvis.zip
+      - name: Pin plugin versions
+        run: |
+          sed -i -E \
+            -e 's/^  flutter_voice_processor:.*/  flutter_voice_processor: ^1.1.0/' \
+            -e 's/^  flutter_tts:.*/  flutter_tts: ^4.0.2/' \
+            -e 's/^  flutter_contacts:.*/  flutter_contacts: ^1.1.9/' \
+            -e 's/^  permission_handler:.*/  permission_handler: ^11.3.1/' \
+            mahesh_jarvis/source/pubspec.yaml
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -17,9 +27,9 @@ jobs:
           flutter-version: "3.24.5"
           channel: stable
           cache: true
-      - run: bash setup.sh
-      - run: cd app && flutter build apk --release
-      - run: cp app/build/app/outputs/flutter-apk/app-release.apk mahesh-jarvis.apk
+      - run: cd mahesh_jarvis && bash setup.sh
+      - run: cd mahesh_jarvis/app && flutter build apk --release
+      - run: cp mahesh_jarvis/app/build/app/outputs/flutter-apk/app-release.apk mahesh-jarvis.apk
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
