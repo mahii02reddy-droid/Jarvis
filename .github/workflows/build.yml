@@ -14,7 +14,8 @@ jobs:
         run: |
           sed -i -E \
             -e 's/^  flutter_voice_processor:.*/  flutter_voice_processor: ^1.1.0/' \
-            -e 's/^  flutter_tts:.*/  flutter_tts: ^4.0.2/' \
+            -e 's/^  flutter_tts:.*/  flutter_tts: 4.2.0/' \
+            -e 's/^  speech_to_text:.*/  speech_to_text: 7.0.0/' \
             -e 's/^  flutter_contacts:.*/  flutter_contacts: ^1.1.9/' \
             -e 's/^  permission_handler:.*/  permission_handler: ^11.3.1/' \
             mahesh_jarvis/source/pubspec.yaml
