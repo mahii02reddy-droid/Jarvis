@@ -5,22 +5,21 @@ permissions:
   contents: write
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: unzip mahesh_jarvis.zip
-      - run: grep -rl "eagle_flutter" mahesh_jarvis | xargs -r sed -i '/eagle_flutter/d' || true
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: "3.24.5"
           channel: stable
-      - run: cd mahesh_jarvis && bash setup.sh
-      - run: cat -n mahesh_jarvis/app/lib/screens/setup_screen.dart || true
-      - run: cd mahesh_jarvis/app && flutter build apk --release
-      - run: cp mahesh_jarvis/app/build/app/outputs/flutter-apk/app-release.apk mahesh-jarvis.apk
+          cache: true
+      - run: bash setup.sh
+      - run: cd app && flutter build apk --release
+      - run: cp app/build/app/outputs/flutter-apk/app-release.apk mahesh-jarvis.apk
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
