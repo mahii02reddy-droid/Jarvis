@@ -9,8 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip mahesh_jarvis.zip
-      - run: grep -rl "eagle_flutter" mahesh_jarvis | xargs -r sed -i '/eagle_flutter/d'
-      - run: cat -n mahesh_jarvis/app/lib/screens/setup_screen.dart
+      - run: grep -rl "eagle_flutter" mahesh_jarvis | xargs -r sed -i '/eagle_flutter/d' || true
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -19,6 +18,7 @@ jobs:
         with:
           channel: stable
       - run: cd mahesh_jarvis && bash setup.sh
+      - run: cat -n mahesh_jarvis/app/lib/screens/setup_screen.dart || true
       - run: cd mahesh_jarvis/app && flutter build apk --release
       - run: cp mahesh_jarvis/app/build/app/outputs/flutter-apk/app-release.apk mahesh-jarvis.apk
       - uses: softprops/action-gh-release@v2
