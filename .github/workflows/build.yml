@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip mahesh_jarvis.zip
+      - run: sed -i '/eagle_flutter/d' mahesh_jarvis/setup.sh
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
