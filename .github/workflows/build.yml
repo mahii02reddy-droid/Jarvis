@@ -10,6 +10,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unzip project
         run: unzip -q mahesh_jarvis.zip
+      - name: Fix voice_pipeline
+        run: |
+          sed -i 's/if (!await _vp.hasRecordAudioPermission())/if (await _vp.hasRecordAudioPermission() != true)/' mahesh_jarvis/source/lib/services/voice_pipeline.dart
       - name: Pin plugin versions
         run: |
           sed -i -E \
