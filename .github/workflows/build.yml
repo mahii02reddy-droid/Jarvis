@@ -10,13 +10,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unzip project
         run: unzip -q mahesh_jarvis.zip
-      - name: Fix voice_pipeline
+      - name: Use keyless voice pipeline
         run: |
-          sed -i 's/if (!await _vp.hasRecordAudioPermission())/if (await _vp.hasRecordAudioPermission() != true)/' mahesh_jarvis/source/lib/services/voice_pipeline.dart
+          cp voice_pipeline.dart mahesh_jarvis/source/lib/services/voice_pipeline.dart
+          sed -i 's/Picovoice AccessKey (required)/Not needed - leave empty/' mahesh_jarvis/source/lib/screens/setup_screen.dart
       - name: Pin plugin versions
         run: |
           sed -i -E \
-            -e 's/^  flutter_voice_processor:.*/  flutter_voice_processor: ^1.1.0/' \
+            -e '/porcupine_flutter|flutter_voice_processor/d' \
             -e 's/^  flutter_tts:.*/  flutter_tts: 4.2.0/' \
             -e 's/^  speech_to_text:.*/  speech_to_text: 7.0.0/' \
             -e 's/^  flutter_contacts:.*/  flutter_contacts: ^1.1.9/' \
