@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: unzip mahesh_jarvis.zip
       - run: grep -rl "eagle_flutter" mahesh_jarvis | xargs -r sed -i '/eagle_flutter/d'
+      - run: cat -n mahesh_jarvis/app/lib/screens/setup_screen.dart
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
